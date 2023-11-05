@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import axios from "axios";
-import next from 'next';
+
 
 // import LoginForm from './LoginForm';
 
@@ -13,12 +14,16 @@ export default function Register () {
     const [statusCode, setStatusCode] = useState<number| null>(null);
     const [correctStatusCode, setCorrectStatusCode] = useState<boolean>(false);
 
+    const router = useRouter();
+
 
     useEffect(() => {
         if(statusCode === 201){
           setCorrectStatusCode(true);
+          router.push("/login")
         }       
     }, [statusCode])
+
     const form = useForm({
         defaultValues: {
             username: "",
@@ -33,10 +38,9 @@ export default function Register () {
     const { errors } = formState;
 
     const onSubmit = async (data: object) => {
-        // const url = "https://pokedictionarygamedev.onrender.com/createNewAccount";
         const url = "http://localhost:8080/accounts/new"
         const returnedData = await axios.post(url, data).catch(error => {
-            // window.alert(error.response.data);
+            window.alert(error.response.data);
             console.log(returnedData)
         });
         
@@ -50,10 +54,9 @@ export default function Register () {
 
     return (
         <>
-        {!correctStatusCode ?
-            <div>
-            <h1 className='loginHeader'>Registration Form</h1>
-            <form className="registrationForm" onSubmit={handleSubmit(onSubmit)} noValidate>
+            <div className="flex flex-col items-center justify-between p-24">
+            <h1>Registration Form</h1>
+            <form className="flex min-h-screen flex-col items-center justify-between p-24" onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className='form-control'>
                     <label htmlFor='username'>Username</label>
                     <input 
@@ -134,10 +137,7 @@ export default function Register () {
             </form>
 
             <Link href="/"><button className="link" >Back To Home</button></Link>
-            </div> :
-
-            <div>Good Job!</div>}
-
+            </div>
         </>
     );
 };
