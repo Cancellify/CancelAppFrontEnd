@@ -3,6 +3,7 @@ import axios from "axios";
 import React, {useState, useEffect, use, useContext} from "react"
 import { userId } from "../login/page";
 
+
 export default function CreateEvents() {
   //useState
   const [friends, setFriends] = useState<any>([]);
@@ -16,17 +17,18 @@ export default function CreateEvents() {
   const [invitees, setInvitees] = useState<any>([]);
   const [creator, setCreator] =useState<string | null>(null)
 
-  let user:string = useContext(userId)
+  let user:string | null = useContext(userId);
 
   //constant
   let inviteArray:[] = [];
   let continueInvite: [] = [];
+  
 
   //useEffect
   useEffect(() => {
     fetchUsers();
     setCreator(user)
-  }, [])
+  }, [],)
 
   
   useEffect(()=>{
