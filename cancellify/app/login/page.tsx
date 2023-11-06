@@ -4,24 +4,23 @@ import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { createContext } from 'react';
-
 
 export default function LoginForm() {
     const [statusCode, setStatusCode] = useState<number | null>(null);
     const [correctStatusCode, setCorrectStatusCode] = useState<boolean>(false);
     const [user, setUser] = useState<string |null> (null)
-  
+    
+    
 
     const router = useRouter();
 
     useEffect(() => {
-        if(statusCode === 200 && user){
+        if(statusCode === 200){
           setCorrectStatusCode(true);
             router.push("/home");
         }       
     
-    }, [statusCode, router, user])
+    }, [statusCode, router])
 
    
 
@@ -40,7 +39,7 @@ export default function LoginForm() {
         const returnedData = await axios.post(url, data).catch(error => {
             window.alert(error.response.data)});
         if(returnedData){
-            setUser(returnedData.data.username);
+            localStorage.setItem("username", returnedData.data.username)
             setStatusCode(returnedData.status);
         }            
     }
@@ -87,3 +86,4 @@ export default function LoginForm() {
 
     );
 };
+

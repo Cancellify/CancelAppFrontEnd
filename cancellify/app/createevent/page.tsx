@@ -3,7 +3,6 @@ import axios from "axios";
 import React, {useState, useEffect, use, useContext} from "react"
 
 
-
 export default function CreateEvents() {
   //useState
   const [friends, setFriends] = useState<any>([]);
@@ -15,20 +14,14 @@ export default function CreateEvents() {
   const [eventDetails, setEventDetails] = useState<string>("");
   const [eventTitle, setEventTitle] = useState<string>("");
   const [invitees, setInvitees] = useState<any>([]);
-  const [creator, setCreator] =useState<string | null>(null)
-  const [query2, setQuery2] = useState<string>("");
-  const [queryResults2, setQueryResults2] = useState<any>([]);
-
-  //console
-  useEffect(()=>  {
-    console.log(queryResults2)
-    console.log(creator)
-  },[queryResults2, creator])
+  const [creatorUsername, setCreatorUsername] = useState<any>(null)
+  
 
   //useEffect
   useEffect(() => {
     fetchUsers();
-
+    let usernameFromLocal:string | null = localStorage.getItem("username")
+    setCreatorUsername(usernameFromLocal)
   }, [],)
 
   
@@ -36,9 +29,6 @@ export default function CreateEvents() {
       handleQuery();
   }, [query]);
 
-  useEffect(()=> {
-    handleQueryTwo()
-  }, [query2])
 
   useEffect(() => {
     if(date && time){
@@ -61,11 +51,6 @@ export default function CreateEvents() {
 
   }
 
-  function handleChangeForCreator(event: any) {
-    setQuery2(event.target.value.toLowerCase());
-
-}
-
   function handleEventDetails(event: any){
     setEventDetails(event.target.value);
   }
@@ -82,11 +67,7 @@ export default function CreateEvents() {
     setQuery("");
   }
 
-  function handleCreator(event:any){
-    let user = event.target.getAttribute("data-key");
-    setCreator(user)
-    setQuery2("");
-  }
+  
 
   async function createEventButtion (){
     const sentData = {
@@ -94,7 +75,7 @@ export default function CreateEvents() {
       eventDescription: eventDetails,
       date: dateTime,
       invitees: invitees,
-      creator: creator
+      creator: creatorUsername
     }
     const url = "http://localhost:8080/events/create";
     await axios.post(url, sentData);
@@ -112,10 +93,7 @@ export default function CreateEvents() {
     setQueryResults(results)
   }
 
-  function handleQueryTwo() {
-    let results = friends.filter((friend: any) => friend.username.toLowerCase().includes(query2) || friend.first_name.toLowerCase().includes(query2) || friend.last_name.toLowerCase().includes(query2))
-    setQueryResults2(results)
-  }
+ 
 
   async function fetchUsers(){
     const url = "http://localhost:8080/accounts/all";
@@ -126,13 +104,7 @@ export default function CreateEvents() {
 
     return (
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <h1>Event Creator : {creator}</h1>
-    
-       {query2.length !==0 &&(<div><ul>{queryResults2.map((result:any, index: number) => <li key={index} data-key={result.username}
-       onClick={handleCreator}>{result.username} {result.first_name} {result.last_name}</li>)}</ul></div>)
-       }
-       
-      <div><input type="text" value={query2} onChange={handleChangeForCreator}></input><button>Find Me!</button></div>
+        <h1>Event Creator : {creatorUsername}</h1>       
        <div>
        <div>Event Name</div>
         <input type="date" required onChange={handleDate}></input>
