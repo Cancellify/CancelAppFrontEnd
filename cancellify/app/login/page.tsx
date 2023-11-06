@@ -15,7 +15,7 @@ export default function LoginForm() {
     const [playerId, setPlayerId] = useState<number |null>(null)
     const [statusCode, setStatusCode] = useState<number | null>(null);
     const [correctStatusCode, setCorrectStatusCode] = useState<boolean>(false);
-    const [playerUsername, setPlayerUsername] = useState<string |null>(null)
+  
 
     //  playerInfo = createContext(playerId);
     //  username = createContext(playerUsername);
@@ -29,11 +29,7 @@ export default function LoginForm() {
       
     }, [statusCode, router])
 
-    useEffect(() => {
-        console.log(playerId);
-        console.log(playerUsername)
-    }, [playerId])
-
+   
 
     const form = useForm({
         defaultValues: {
@@ -51,14 +47,11 @@ export default function LoginForm() {
             window.alert(error.response.data)});
         if(returnedData){
             setStatusCode(returnedData.status);
-            setPlayerId(returnedData.data.accountID)
-            setPlayerUsername(returnedData.data.username);
         }            
     }
 
     return (  
        <>
-        {/* {!correctStatusCode ? */}
         <div>
           
             <h1 className='loginHeader'>Login Form</h1>
@@ -95,8 +88,6 @@ export default function LoginForm() {
             </form>
             <Link href="/register"><button  className='link' >Register</button></Link>
         </div>
-        {/* // :
-        // <Homepage playerId={playerId}/> } */}
         </>
 
     );
