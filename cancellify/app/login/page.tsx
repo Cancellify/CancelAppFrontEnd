@@ -6,17 +6,12 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { createContext } from 'react';
 
-export let userId:any = null ;
-// export let username = createContext();
-
 
 export default function LoginForm() {
     const [statusCode, setStatusCode] = useState<number | null>(null);
     const [correctStatusCode, setCorrectStatusCode] = useState<boolean>(false);
     const [user, setUser] = useState<string |null> (null)
   
-
-    userId = createContext(user);
 
     const router = useRouter();
 

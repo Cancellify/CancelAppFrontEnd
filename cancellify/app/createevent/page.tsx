@@ -1,7 +1,7 @@
 "use client"
 import axios from "axios";
 import React, {useState, useEffect, use, useContext} from "react"
-import { userId } from "../login/page";
+
 
 
 export default function CreateEvents() {
@@ -16,24 +16,29 @@ export default function CreateEvents() {
   const [eventTitle, setEventTitle] = useState<string>("");
   const [invitees, setInvitees] = useState<any>([]);
   const [creator, setCreator] =useState<string | null>(null)
+  const [query2, setQuery2] = useState<string>("");
+  const [queryResults2, setQueryResults2] = useState<any>([]);
 
-  let user:string | null = useContext(userId);
-
-  //constant
-  let inviteArray:[] = [];
-  let continueInvite: [] = [];
-  
+  //console
+  useEffect(()=>  {
+    console.log(queryResults2)
+    console.log(creator)
+  },[queryResults2, creator])
 
   //useEffect
   useEffect(() => {
     fetchUsers();
-    setCreator(user)
+
   }, [],)
 
   
   useEffect(()=>{
       handleQuery();
   }, [query]);
+
+  useEffect(()=> {
+    handleQueryTwo()
+  }, [query2])
 
   useEffect(() => {
     if(date && time){
@@ -52,9 +57,14 @@ export default function CreateEvents() {
   }
 
   function handleChange(event: any) {
-      setQuery(event.target.value.toLowerCase());
+    setQuery(event.target.value.toLowerCase());
 
   }
+
+  function handleChangeForCreator(event: any) {
+    setQuery2(event.target.value.toLowerCase());
+
+}
 
   function handleEventDetails(event: any){
     setEventDetails(event.target.value);
@@ -70,6 +80,12 @@ export default function CreateEvents() {
     setInvitees((prev:[]) => [...prev, invitedMember])
     }
     setQuery("");
+  }
+
+  function handleCreator(event:any){
+    let user = event.target.getAttribute("data-key");
+    setCreator(user)
+    setQuery2("");
   }
 
   async function createEventButtion (){
@@ -96,6 +112,11 @@ export default function CreateEvents() {
     setQueryResults(results)
   }
 
+  function handleQueryTwo() {
+    let results = friends.filter((friend: any) => friend.username.toLowerCase().includes(query2) || friend.first_name.toLowerCase().includes(query2) || friend.last_name.toLowerCase().includes(query2))
+    setQueryResults2(results)
+  }
+
   async function fetchUsers(){
     const url = "http://localhost:8080/accounts/all";
     let response:any ; 
@@ -106,6 +127,12 @@ export default function CreateEvents() {
     return (
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <h1>Event Creator : {creator}</h1>
+    
+       {query2.length !==0 &&(<div><ul>{queryResults2.map((result:any, index: number) => <li key={index} data-key={result.username}
+       onClick={handleCreator}>{result.username} {result.first_name} {result.last_name}</li>)}</ul></div>)
+       }
+       
+      <div><input type="text" value={query2} onChange={handleChangeForCreator}></input><button>Find Me!</button></div>
        <div>
        <div>Event Name</div>
         <input type="date" required onChange={handleDate}></input>
