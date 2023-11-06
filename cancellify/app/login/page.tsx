@@ -4,30 +4,29 @@ import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { createContext } from 'react';
 
-// import { createContext } from 'react';
-
-// export let playerInfo = createContext();
+export let userId:any = null ;
 // export let username = createContext();
 
 
 export default function LoginForm() {
-    const [playerId, setPlayerId] = useState<number |null>(null)
     const [statusCode, setStatusCode] = useState<number | null>(null);
     const [correctStatusCode, setCorrectStatusCode] = useState<boolean>(false);
+    const [user, setUser] = useState<string |null> (null)
   
 
-    //  playerInfo = createContext(playerId);
-    //  username = createContext(playerUsername);
+    userId = createContext(user);
+
     const router = useRouter();
 
     useEffect(() => {
-        if(statusCode === 200){
+        if(statusCode === 200 && user){
           setCorrectStatusCode(true);
             router.push("/home");
         }       
-      
-    }, [statusCode, router])
+    
+    }, [statusCode, router, user])
 
    
 
@@ -46,6 +45,7 @@ export default function LoginForm() {
         const returnedData = await axios.post(url, data).catch(error => {
             window.alert(error.response.data)});
         if(returnedData){
+            setUser(returnedData.data.username);
             setStatusCode(returnedData.status);
         }            
     }

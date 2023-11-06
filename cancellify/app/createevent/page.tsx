@@ -1,39 +1,92 @@
 "use client"
 import axios from "axios";
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, use, useContext} from "react"
+import { userId } from "../login/page";
 
 export default function CreateEvents() {
-  const [friends, setFriends] = useState<any>([])
-  const [query, setQuery] = useState<String>("")
-  const [queryResults, setQueryResults] = useState<any>([])
-  const [date, setDate] = useState<any>(null)
-  const [time, setTime] = useState<any>(null)
+  //useState
+  const [friends, setFriends] = useState<any>([]);
+  const [query, setQuery] = useState<string>("");
+  const [queryResults, setQueryResults] = useState<any>([]);
+  const [date, setDate] = useState<any>(null);
+  const [time, setTime] = useState<any>(null);
+  const [dateTime, setDateTime] = useState<any>(null);
+  const [eventDetails, setEventDetails] = useState<string>("");
+  const [eventTitle, setEventTitle] = useState<string>("");
+  const [invitees, setInvitees] = useState<any>([]);
+  const [creator, setCreator] =useState<string | null>(null)
 
+  let user:string = useContext(userId)
+
+  //constant
+  let inviteArray:[] = [];
+  let continueInvite: [] = [];
+
+  //useEffect
   useEffect(() => {
     fetchUsers();
+    setCreator(user)
   }, [])
 
   
   useEffect(()=>{
       handleQuery();
-  }, [query])
+  }, [query]);
 
   useEffect(() => {
-    console.log(date),
-    console.log(time)
-  }, [date, time])
+    if(date && time){
+    setDateTime(new Date((date + " " + time)).toISOString());
+    }
+  }, [date, time]);
 
+
+  //handler functions
   function handleDate(event :any ) {
-    setDate(event.target.value)
+    setDate(event.target.value);
   }
 
   function handleTime(event: any) {
-    setTime(event.target.value)
+    setTime(event.target.value);
   }
 
   function handleChange(event: any) {
       setQuery(event.target.value.toLowerCase());
 
+  }
+
+  function handleEventDetails(event: any){
+    setEventDetails(event.target.value);
+  }
+
+  function handleEventTitle(event: any){
+    setEventTitle(event.target.value);
+  }
+
+  function handleInvite(event:any){
+    const invitedMember = event.target.getAttribute("data-key");
+    if(!invitees.includes(invitedMember)){
+    setInvitees((prev:[]) => [...prev, invitedMember])
+    }
+    setQuery("");
+  }
+
+  async function createEventButtion (){
+    const sentData = {
+      eventName: eventTitle,
+      eventDescription: eventDetails,
+      date: dateTime,
+      invitees: invitees,
+      creator: creator
+    }
+    const url = "http://localhost:8080/events/create";
+    await axios.post(url, sentData);
+
+    setEventTitle("");
+    setEventDetails("");
+    setDate(null);
+    setTime(null);
+    setDateTime(null)
+    setInvitees([])
   }
  
   function handleQuery() {
@@ -50,18 +103,30 @@ export default function CreateEvents() {
 
     return (
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <h1>Event Creator : {creator}</h1>
        <div>
        <div>Event Name</div>
-        <input type="date" onChange={handleDate}></input>
-        <input type="time" onChange={handleTime}/>
+        <input type="date" required onChange={handleDate}></input>
+        <input type="time" required onChange={handleTime}/>
         <div>Event Name</div>
-        <input type="text"></input>
+        <input type="text" value={eventTitle} required onChange={handleEventTitle}></input>
         <div>Event Description</div>
-        <textarea></textarea>
-       </div>
-       {query.length !==0 &&(<div><ul>{queryResults.map((result:any) => <li>{result.username} {result.first_name} {result.last_name}</li>)}</ul></div>)
+        <textarea required value= {eventDetails} onChange={handleEventDetails}></textarea>
+        <div>
+          <h1>Invitees</h1>
+        {invitees.length !==0 &&(<div><ul>{invitees.map((username:string, index: number) => <li key={index}>{username}</li>)}</ul></div>)
        }
-      <div><input type="text" onChange={handleChange}></input><button>Search</button></div>
+       </div>
+        <div>
+          <button onClick={createEventButtion}>Everything Ready?</button>
+        </div>
+       </div>
+       <div>
+       {query.length !==0 &&(<div><ul>{queryResults.map((result:any, index: number) => <li key={index} data-key={result.username}
+       onClick={handleInvite}>{result.username} {result.first_name} {result.last_name}</li>)}</ul></div>)
+       }
+      <div><input type="text" value={query} onChange={handleChange}></input><button>Search</button></div>
+      </div>
       </main>
     )
   }
