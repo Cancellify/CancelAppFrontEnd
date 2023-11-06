@@ -22,7 +22,7 @@ export default function Register () {
           setCorrectStatusCode(true);
           router.push("/login")
         }       
-    }, [statusCode])
+    }, [statusCode, router])
 
     const form = useForm({
         defaultValues: {

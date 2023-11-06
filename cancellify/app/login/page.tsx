@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 // import { createContext } from 'react';
 
@@ -18,14 +19,15 @@ export default function LoginForm() {
 
     //  playerInfo = createContext(playerId);
     //  username = createContext(playerUsername);
+    const router = useRouter();
 
-    // useEffect(() => {
-    //     if(statusCode === 200){
-    //       setCorrectStatusCode(true);
-    //         navigate("/home");
-    //     }       
+    useEffect(() => {
+        if(statusCode === 200){
+          setCorrectStatusCode(true);
+            router.push("/home");
+        }       
       
-    // }, [statusCode])
+    }, [statusCode, router])
 
     useEffect(() => {
         console.log(playerId);
