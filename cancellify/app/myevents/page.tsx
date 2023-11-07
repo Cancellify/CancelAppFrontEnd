@@ -13,11 +13,10 @@ export default function MyEvents() {
   useEffect(() => {
     const id = localStorage.getItem("id");
     setUserIdForFetch(id)
+    handleGetEvents();
   }, []);
 
-  useEffect(()=>{
-    handleGetEvents();
-  }, [userIdForFetch]);
+
 
   useEffect(()=>{
     if(allEvents){
@@ -28,9 +27,9 @@ export default function MyEvents() {
 
  //handler
 
- async function handleChangeAttendance(){
+//  async function handleChangeAttendance(){
 
- }
+//  }
 
   async function handleGetEvents(){
     // const url = "http://localhost:8080/events/all";
