@@ -18,6 +18,7 @@ export default function MyEvents() {
   }, []);
 
 useEffect(() => {
+  if(userIdForFetch){
   async function handleGetEvents(){
     // const url = "http://localhost:8080/events/all";
     const url = "https://cancellify-2681bafbf4fb.herokuapp.com/events/all"
@@ -28,7 +29,8 @@ useEffect(() => {
     }
   }
     handleGetEvents();
-}, [])
+}
+}, [userIdForFetch])
 
 
   useEffect(()=>{
