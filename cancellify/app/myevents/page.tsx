@@ -8,13 +8,13 @@ export default function MyEvents() {
   //useState
   const [userIdForFetch, setUserIdForFetch] = useState<any>(null);
   const [allEvents, setAllEvents] = useState<any>(null);
-  const[userIdSet, setUserIdSet] = useState<boolean>(false)
+ 
  
 //useEffect
   useEffect(() => {
     const id = localStorage.getItem("id");
     setUserIdForFetch(id);
-    setUserIdSet(true);
+
   }, []);
 
 useEffect(() => {
@@ -56,7 +56,7 @@ useEffect(() => {
 
     return (
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
-       {allEvents ? (<div>{allEvents.map((events:any)=> <div>{events.eventName}: {moment(events.date).format("MMM Do YY")} <div>{events.eventDescription}</div> <div>{events.attendace ? <button>Want to Attend?</button> : <button>Thinking about Canceling?</button>} </div></div>)}
+       {allEvents ? (<div>{allEvents.map((events:any, index:number)=> <div key={index}>{events.eventName}: {moment(events.date).format("MMM Do YY")} <div key={index}>{events.eventDescription}</div> <div key={index}>{events.attendace ? <button>Want to Attend?</button> : <button>Thinking about Canceling?</button>} </div></div>)}
        </div>): <div>Loading</div>}
        <div>
       <Link href="/home"><button>Back to Home?</button></Link>
