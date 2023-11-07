@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect} from "react"
+import React, { useState, useEffect, useCallback} from "react"
 import axios from "axios";
 import Link from "next/link";
 const moment = require("moment")
@@ -18,6 +18,15 @@ export default function MyEvents() {
   }, []);
 
 useEffect(() => {
+  async function handleGetEvents(){
+    // const url = "http://localhost:8080/events/all";
+    const url = "https://cancellify-2681bafbf4fb.herokuapp.com/events/all"
+    const returnedEvents = await axios.post(url, {id: userIdForFetch}).catch(error => {
+      window.alert(error.response.data)});
+    if(returnedEvents){
+      setAllEvents(returnedEvents.data)
+    }
+  }
     handleGetEvents();
 }, [])
 
@@ -35,15 +44,15 @@ useEffect(() => {
 
 //  }
 
-  async function handleGetEvents(){
-    // const url = "http://localhost:8080/events/all";
-    const url = "https://cancellify-2681bafbf4fb.herokuapp.com/events/all"
-    const returnedEvents = await axios.post(url, {id: userIdForFetch}).catch(error => {
-      window.alert(error.response.data)});
-    if(returnedEvents){
-      setAllEvents(returnedEvents.data)
-    }
-  }
+  // async function handleGetEvents(){
+  //   // const url = "http://localhost:8080/events/all";
+  //   const url = "https://cancellify-2681bafbf4fb.herokuapp.com/events/all"
+  //   const returnedEvents = await axios.post(url, {id: userIdForFetch}).catch(error => {
+  //     window.alert(error.response.data)});
+  //   if(returnedEvents){
+  //     setAllEvents(returnedEvents.data)
+  //   }
+  // }
 
     return (
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
