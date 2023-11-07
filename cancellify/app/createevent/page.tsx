@@ -98,7 +98,8 @@ export default function CreateEvents() {
  
 
   async function fetchUsers(){
-    const url = "http://localhost:8080/accounts/all";
+    // const url = "http://localhost:8080/accounts/all";
+    const url = "https://cancellify-2681bafbf4fb.herokuapp.com/accounts/all"
     let response:any ; 
     response = await axios.get(url)
     setFriends(response.data)
