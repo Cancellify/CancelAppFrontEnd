@@ -8,14 +8,20 @@ export default function MyEvents() {
   //useState
   const [userIdForFetch, setUserIdForFetch] = useState<any>(null);
   const [allEvents, setAllEvents] = useState<any>(null);
+  const[userIdSet, setUserIdSet] = useState<boolean>(false)
  
 //useEffect
   useEffect(() => {
     const id = localStorage.getItem("id");
-    setUserIdForFetch(id)
-    handleGetEvents();
+    setUserIdForFetch(id);
+    setUserIdSet(true);
   }, []);
 
+useEffect(() => {
+  if(userIdSet){
+    handleGetEvents();
+  }
+}, [userIdSet])
 
 
   useEffect(()=>{
