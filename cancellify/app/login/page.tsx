@@ -40,6 +40,7 @@ export default function LoginForm() {
             window.alert(error.response.data)});
         if(returnedData){
             localStorage.setItem("username", returnedData.data.username)
+            localStorage.setItem("id", returnedData.data.id)
             setStatusCode(returnedData.status);
         }            
     }

@@ -41,7 +41,6 @@ export default function Register () {
         const url = "http://localhost:8080/accounts/new"
         const returnedData = await axios.post(url, data).catch(error => {
             window.alert(error.response.data);
-            console.log(returnedData)
         });
         
         
