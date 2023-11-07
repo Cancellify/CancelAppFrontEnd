@@ -1,5 +1,6 @@
 "use client"
 import axios from "axios";
+import Link from "next/link";
 import React, {useState, useEffect, use, useContext} from "react"
 
 
@@ -77,7 +78,8 @@ export default function CreateEvents() {
       invitees: invitees,
       creator: creatorUsername
     }
-    const url = "http://localhost:8080/events/create";
+    // const url = "http://localhost:8080/events/create";
+    const url = "https://cancellify-2681bafbf4fb.herokuapp.com/events/create"
     await axios.post(url, sentData);
 
     setEventTitle("");
@@ -127,6 +129,10 @@ export default function CreateEvents() {
        onClick={handleInvite}>{result.username} {result.first_name} {result.last_name}</li>)}</ul></div>)
        }
       <div><input type="text" value={query} onChange={handleChange}></input><button>Search</button></div>
+      </div>
+      <div>
+      <Link href="/home"><button>Back to Home?</button></Link>
+      <Link href="/myevents"><button>To my events</button></Link>
       </div>
       </main>
     )

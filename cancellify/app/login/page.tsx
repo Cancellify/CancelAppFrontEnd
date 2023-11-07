@@ -35,7 +35,8 @@ export default function LoginForm() {
     const { errors } = formState;
 
     const onSubmit = async (data: object) => {
-        const url = "http://localhost:8080/accounts/login";
+        // const url = "http://localhost:8080/accounts/login";
+        const url = "https://cancellify-2681bafbf4fb.herokuapp.com/login"
         const returnedData = await axios.post(url, data).catch(error => {
             window.alert(error.response.data)});
         if(returnedData){
