@@ -18,10 +18,8 @@ export default function MyEvents() {
   }, []);
 
 useEffect(() => {
-  if(userIdSet){
     handleGetEvents();
-  }
-}, [userIdSet])
+}, [])
 
 
   useEffect(()=>{
