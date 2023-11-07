@@ -78,8 +78,8 @@ export default function CreateEvents() {
       invitees: invitees,
       creator: creatorUsername
     }
-    // const url = "http://localhost:8080/events/create";
-    const url = "https://cancellify-2681bafbf4fb.herokuapp.com/events/create"
+    const url = "http://localhost:8080/events/create";
+    // const url = "https://cancellify-2681bafbf4fb.herokuapp.com/events/create"
     await axios.post(url, sentData);
 
     setEventTitle("");
@@ -98,8 +98,8 @@ export default function CreateEvents() {
  
 
   async function fetchUsers(){
-    // const url = "http://localhost:8080/accounts/all";
-    const url = "https://cancellify-2681bafbf4fb.herokuapp.com/accounts/all"
+    const url = "http://localhost:8080/accounts/all";
+    // const url = "https://cancellify-2681bafbf4fb.herokuapp.com/accounts/all"
     let response:any ; 
     response = await axios.get(url)
     setFriends(response.data)
