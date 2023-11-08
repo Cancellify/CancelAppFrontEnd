@@ -54,12 +54,15 @@ export default function Register () {
 
     return (
         <>
-            <div className="flex flex-col items-center justify-between p-24">
-            <h1>Registration Form</h1>
-            <form className="flex min-h-screen flex-col items-center justify-between p-24" onSubmit={handleSubmit(onSubmit)} noValidate>
-                <div className='form-control'>
-                    <label htmlFor='username'>Username</label>
+            <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-violet-800 w-screen h-screen m-0 text-amber-300 body-font font-poppins">
+            <div className="flex min-h-full flex-col justify-center items-center px-6 py-12 lg:px-8 space-y-6 text-left ">
+            <form className="flex min-h-full flex-col justify-center items-center px-6 py-12 lg:px-8 space-y-6 text-left" onSubmit={handleSubmit(onSubmit)} noValidate>
+            <h1 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight'>Registration Form</h1>
+                <div className='form-control flex justify-center'>
+                    
+                    <label className="bg-emerald-800 rounded rounded-r-none p-2 w-24" htmlFor='username'>Username</label>
                     <input 
+                        className='rounded rounded-l-none p-2 text-emerald-800'
                         type='text' 
                         id='username' 
                         {...register("username", {
@@ -70,73 +73,92 @@ export default function Register () {
                         })} 
                     />
                     <p className='error'>{errors.username?.message}</p>
-                </div>
+                    </div>
+                
 
-                <div className='form-control'>
-                    <label htmlFor='password'>Password</label>
-                    <input 
+                <div className='form-control flex justify-center'>
+                
+                    <label className="bg-emerald-800 rounded rounded-r-none p-2 w-24" htmlFor='password'>Password</label>
+                    <input
+                    className='rounded rounded-l-none p-2 text-emerald-800' 
                         type='password' 
                         id='password' 
                         {...register("password", {
                             required: {
                                 value: true,
-                                message: "Password is required."
+                                message: "*Password is required"
                             }
                         })} 
                     />
                     <p className='error'>{errors.password?.message}</p>
                 </div>
+                
 
-                <div className='form-control'>
-                    <label htmlFor='email'>Email</label>
+                <div className='form-control flex justify-center'>
+                    <label  className="bg-emerald-800 rounded rounded-r-none p-2 w-24" htmlFor='email'>Email</label>
                     <input 
+                    className='rounded rounded-l-none p-2 text-emerald-800'
                         type='email' 
                         id='email' 
                         {...register("email", {
                             pattern: {
                                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                                 message: "Invalid email format."
+                            },
+                            required: {
+                                value:true,
+                                message: "*Email is required"
                             }
                         })} 
+                        
                     />
                     <p className='error'>{errors.email?.message}</p>
                 </div>
-
-                <div className='form-control'>
-                    <label htmlFor='firstName'>First Name</label>
+                
+                <div className='form-control flex justify-center'>
+                
+                    <label className="bg-emerald-800 rounded rounded-r-none p-2 w-24" htmlFor='firstName'>First Name</label>
                     <input 
+                    className='rounded rounded-l-none p-2 text-emerald-800'
                         type='text' 
                         id='firstName' 
                         {...register("firstName", {
                             required: {
                                 value: true,
-                                message: "First name is required."
+                                message: "*First name is required"
                             }
                         })} 
                     />
                     <p className='error'>{errors.firstName?.message}</p>
                 </div>
+             
 
-                <div className='form-control'>
-                  <label htmlFor='lastName'>Last Name</label>
+                <div className='form-control flex justify-center'>
+                
+                  <label className="bg-emerald-800 rounded rounded-r-none p-2 w-24" htmlFor='lastName'>Last Name</label>
                     <input 
+                    className='rounded rounded-l-none p-2 text-emerald-800'
                         type='text' 
                         id='lastName' 
                         {...register("lastName", {
 
                             required: {
                                 value: true,
-                                message: "Last name is required."
+                                message: "*Last name is required"
                             }
                         })} 
                     />
+                    <br />
                     <p className='error'>{errors.lastName?.message}</p>
                 </div>
+                
 
-                <button className="link" type='submit'>Register</button>
+                <button className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1" type='submit'>Register</button>
+                 <Link className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1" href="/login"><button  >Back To Login</button></Link>
             </form>
+            </div>
 
-            <Link href="/login"><button className="link" >Back To Login</button></Link>
+           
             </div>
         </>
     );
