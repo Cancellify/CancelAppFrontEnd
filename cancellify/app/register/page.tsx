@@ -153,8 +153,8 @@ export default function Register () {
                 </div>
                 
 
-                <button className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1" type='submit'>Register</button>
-                 <Link className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1" href="/login"><button  >Back To Login</button></Link>
+                <button className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1 shadow-2xl shadow-cyan-500/50" type='submit'>Register</button>
+                 <Link className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1 shadow-2xl shadow-cyan-500/50" href="/login"><button  >Back To Login</button></Link>
             </form>
             </div>
 

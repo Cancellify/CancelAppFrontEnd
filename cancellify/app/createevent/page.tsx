@@ -1,5 +1,6 @@
 "use client"
 import axios from "axios";
+import { error } from "console";
 import Link from "next/link";
 import React, {useState, useEffect, use, useContext} from "react"
 
@@ -70,7 +71,7 @@ export default function CreateEvents() {
 
   
 
-  async function createEventButtion (){
+  async function createEventButtion (event:any){
     const sentData = {
       eventName: eventTitle,
       eventDescription: eventDetails,
@@ -80,7 +81,16 @@ export default function CreateEvents() {
     }
     const url = "http://localhost:8080/events/create";
     // const url = "https://cancellify-2681bafbf4fb.herokuapp.com/events/create"
-    await axios.post(url, sentData);
+    const data = await axios.post(url, sentData).catch(error=> {
+      window.alert("Event not created. make sure all fields are set")
+    });
+    if(data){
+      window.alert("Event Created!")
+    }
+    
+    (document.getElementById("myDate") as HTMLInputElement).value ="";
+    (document.getElementById("myTime") as HTMLInputElement).value ="";
+    
 
     setEventTitle("");
     setEventDetails("");
@@ -108,6 +118,7 @@ export default function CreateEvents() {
     let response:any ; 
     response = await axios.get(url)
     setFriends(response.data)
+  
 }
 
     return (
@@ -115,13 +126,13 @@ export default function CreateEvents() {
         <h1 className="p-2">Event Creator : {creatorUsername}</h1>       
        <div>
        <div className="flex items-center justify-center p-2 bg-violet-800  text-amber-300 body-font font-poppins">Event Name</div>
-        <input className="bg-emerald-800 rounded rounded-r-none p-2 w-32" type="date" required onChange={handleDate}></input>
-        <input className="bg-emerald-800 rounded rounded-l-none p-2 w-32"type="time" required onChange={handleTime}/>
+        <input className="bg-emerald-800 rounded rounded-r-none p-2 w-32" id="myDate" type="date"  required onChange={handleDate}></input>
+        <input className="bg-emerald-800 rounded rounded-l-none p-2 w-32"type="time" id="myTime"  required onChange={handleTime}/>
         <div className="flex items-center justify-center p-2 bg-violet-800  text-amber-300 body-font font-poppins">Event Name</div>
         <input className="bg-emerald-800 rounded p-2 w-64" type="text" value={eventTitle} required onChange={handleEventTitle}></input>
         <div className="flex items-center justify-center">Event Description</div>
         <div className="flex items-center justify-center mb-1.5">
-        <textarea className="flex items-center justify-center bg-emerald-800 p-1 rounded resize-vertical mb-1.5" required value= {eventDetails} onChange={handleEventDetails}></textarea>
+        <textarea className="flex items-center justify-center bg-emerald-800 p-1 rounded resize-vertical mb-1.5 overflow-hidden" required value= {eventDetails} onChange={handleEventDetails}></textarea>
         </div>
         <div>
           
