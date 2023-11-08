@@ -38,8 +38,8 @@ export default function Register () {
     const { errors } = formState;
 
     const onSubmit = async (data: object) => {
-        const url = "http://localhost:8080/accounts/new"
-        // const url = "https://cancellify-2681bafbf4fb.herokuapp.com/accounts/new"
+        // const url = "http://localhost:8080/accounts/new"
+        const url = "https://cancellify-2681bafbf4fb.herokuapp.com/accounts/new"
         const returnedData = await axios.post(url, data).catch(error => {
             window.alert(error.response.data);
         });

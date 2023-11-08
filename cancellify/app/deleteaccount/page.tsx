@@ -33,8 +33,8 @@ async function sendDelete(){
     username: username,
     password: password
   }
-  const url = "http://localhost:8080/accounts/delete";
-// const url = "https://cancellify-2681bafbf4fb.herokuapp.com/accounts/delete"
+  // const url = "http://localhost:8080/accounts/delete";
+const url = "https://cancellify-2681bafbf4fb.herokuapp.com/accounts/delete"
   const data = await axios.post(url, userData).catch(error=> {
     window.alert("Account Not Deleted")
     
