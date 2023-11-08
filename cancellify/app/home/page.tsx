@@ -4,14 +4,17 @@ import Link from "next/link"
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-violet-800  text-amber-300 body-font font-poppins">
       <div>
-        <Link href="/createevent"><button>Create an Event</button></Link>
-        <Link href="/myevents"><button>My Events</button></Link>
-      </div>
-
+        <Link className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-2 text-xl" href="/createevent"><button>Create an Event</button></Link>
+        </div>
+        <br/>
+        <div>
+        <Link className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-2 text-xl" href="/myevents"><button>Got to my events</button></Link>
+        </div>
+        <br/>
       <div>
-        <Link href="/deleteaccount"><button>Delete Account?</button></Link>
+        <Link  className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-2 text-xl"href="/deleteaccount"><button>Delete Account?</button></Link>
       </div>
     </main>
   )

@@ -95,6 +95,11 @@ export default function CreateEvents() {
     setQueryResults(results)
   }
 
+  function removeInvitee(event:any) {
+    const user = event.target.innerText;
+    setInvitees((prev:[]) => (prev.filter(uninvite => uninvite !== user )));
+  }
+
  
 
   async function fetchUsers(){
@@ -106,34 +111,42 @@ export default function CreateEvents() {
 }
 
     return (
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <h1>Event Creator : {creatorUsername}</h1>       
+      <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-violet-800  text-amber-300 body-font font-poppins">
+        <h1 className="p-2">Event Creator : {creatorUsername}</h1>       
        <div>
-       <div>Event Name</div>
-        <input type="date" required onChange={handleDate}></input>
-        <input type="time" required onChange={handleTime}/>
-        <div>Event Name</div>
-        <input type="text" value={eventTitle} required onChange={handleEventTitle}></input>
-        <div>Event Description</div>
-        <textarea required value= {eventDetails} onChange={handleEventDetails}></textarea>
+       <div className="flex items-center justify-center p-2 bg-violet-800  text-amber-300 body-font font-poppins">Event Name</div>
+        <input className="bg-emerald-800 rounded rounded-r-none p-2 w-32" type="date" required onChange={handleDate}></input>
+        <input className="bg-emerald-800 rounded rounded-l-none p-2 w-32"type="time" required onChange={handleTime}/>
+        <div className="flex items-center justify-center p-2 bg-violet-800  text-amber-300 body-font font-poppins">Event Name</div>
+        <input className="bg-emerald-800 rounded p-2 w-64" type="text" value={eventTitle} required onChange={handleEventTitle}></input>
+        <div className="flex items-center justify-center">Event Description</div>
+        <div className="flex items-center justify-center mb-1.5">
+        <textarea className="flex items-center justify-center bg-emerald-800 p-1 rounded resize-vertical mb-1.5" required value= {eventDetails} onChange={handleEventDetails}></textarea>
+        </div>
         <div>
-          <h1>Invitees</h1>
-        {invitees.length !==0 &&(<div><ul>{invitees.map((username:string, index: number) => <li key={index}>{username}</li>)}</ul></div>)
+          
+        {invitees.length !==0 &&(<div className="flex-col items-center justify-center  bg-violet-800  text-amber-300 body-font font-poppins">
+          <h1 className="flex items-center justify-center p-2 bg-violet-800  text-amber-300 body-font font-poppins">Invitees List</h1>
+          <ul className="flex items-center justify-center p-2 bg-violet-800  text-amber-300 body-font font-poppins">{invitees.map((username:string, index: number) => 
+          <li className="flex items-center justify-center p-2 bg-violet-800  text-amber-300 body-font font-poppins" onClick={removeInvitee} a-key={index} key={index}>{username}</li>)}</ul></div>)
        }
        </div>
-        <div>
-          <button onClick={createEventButtion}>Everything Ready?</button>
+        <div className="flex justify-center">
+          <button className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-2 mb-1.5" onClick={createEventButtion}>Everything Ready?</button>
         </div>
        </div>
        <div>
        {query.length !==0 &&(<div><ul>{queryResults.map((result:any, index: number) => <li key={index} data-key={result.username}
        onClick={handleInvite}>{result.username} {result.first_name} {result.last_name}</li>)}</ul></div>)
        }
-      <div><input type="text" value={query} onChange={handleChange}></input><button>Search</button></div>
+      <div><input className="bg-emerald-800 rounded p-2 w-64 mt-1.5" type="text" value={query} onChange={handleChange}></input></div>
+      <div className="flex justify-center p-2">
+      <button className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1" onClick={handleChange}>Search</button>
       </div>
-      <div>
-      <Link href="/home"><button>Back to Home?</button></Link>
-      <Link href="/myevents"><button>To my events</button></Link>
+      </div>
+      <div className="flex justify-center">
+      <Link className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1 mr-1.5" href="/home"><button>Back to Home?</button></Link>
+      <Link  className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1" href="/myevents"><button>To my events</button></Link>
       </div>
       </main>
     )
