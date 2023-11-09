@@ -10,7 +10,7 @@ export default function Home() {
         </div>
         <br/>
         <div>
-        <Link className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-2 text-xl shadow-2xl shadow-cyan-500/50" href="/myevents"><button>Got to my events</button></Link>
+        <Link className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-2 text-xl shadow-2xl shadow-cyan-500/50" href="/myevents"><button>Go to my events</button></Link>
         </div>
         <br/>
       <div>
