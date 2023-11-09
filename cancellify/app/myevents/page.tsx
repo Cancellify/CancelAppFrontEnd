@@ -9,8 +9,9 @@ export default function MyEvents() {
   //useState
   const [userIdForFetch, setUserIdForFetch] = useState<any>(null);
   const [allEvents, setAllEvents] = useState<any>(null);
-  const [sortEvents, setSortedEvents] = useState<any>(null)
-  const [pageCount, setPageCount] = useState<boolean>(false)
+  const [sortEvents, setSortedEvents] = useState<any>(null);
+  const [pageCount, setPageCount] = useState<boolean>(false);
+ 
 
  
  
@@ -44,11 +45,11 @@ if(pageCount){
 
  async function handleChangeAttendance(event:any){
   if(event.target.getAttribute("a-key") === "true"){
-  // const url = "http://localhost:8080/events/cancel";
   let eventId: any = event.target.getAttribute("a-data")
     eventId = parseInt(eventId)
+    // const url = "http://localhost:8080/events/cancel";
   const url = "https://cancellify-2681bafbf4fb.herokuapp.com/events/cancel";
-  const data = await axios.patch(url, {attendance: true, eventId: eventId, userId: parseInt(userIdForFetch)}).catch(error => {
+  const data = await axios.patch(url, {attendance: true, eventId: eventId, userId: parseInt(userIdForFetch), openCancel: null}).catch(error => {
     window.alert(error.response.data);
   })
   handleGetEvents();
@@ -58,15 +59,23 @@ if(pageCount){
     eventId = parseInt(eventId)
     // const url = "http://localhost:8080/events/cancel";
     const url = "https://cancellify-2681bafbf4fb.herokuapp.com/events/cancel";
-    const date = await axios.patch(url, {attendance: false, eventId: eventId, userId: parseInt(userIdForFetch)}).catch(error => {
+    const date = await axios.patch(url, {attendance: false, eventId: eventId, userId: parseInt(userIdForFetch), openCancel: null}).catch(error => {
       window.alert(error.response.data);
       setPageCount(true)
     })
-    
     handleGetEvents();
-    
   }
-  
+  if(event.target.getAttribute("a-key") === "tell"){
+    let eventId: any = event.target.getAttribute("a-data")
+    eventId = parseInt(eventId)
+    // const url = "http://localhost:8080/events/cancel";
+    const url = "https://cancellify-2681bafbf4fb.herokuapp.com/events/cancel";
+    const date = await axios.patch(url, {attendance: false, eventId: eventId, userId: parseInt(userIdForFetch), openCancel: true}).catch(error => {
+      window.alert(error.response.data);
+      setPageCount(true)
+    })
+    handleGetEvents();
+  }
  }
 
  function handleReload(){
@@ -94,7 +103,10 @@ if(pageCount){
        <div className="bg-violet-800 flex justify-center" key={index}>
         {events.attendance === false ?
         <button className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1 mr-1.5 shadow-2xl shadow-cyan-500/50" onClick={handleChangeAttendance} onClickCapture={handleReload} a-key={"true"} a-data={`${events.eventId}`}>Want to Attend?</button>:
-        <button className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1 shadow-2xl shadow-cyan-500/50" onClick={handleChangeAttendance} onClickCapture={handleReload} a-key={"false"} a-data={`${events.eventId}`}>Thinking about Canceling?</button> 
+        <div>
+        <button className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1 shadow-2xl mb-1.5 shadow-cyan-500/50" onClick={handleChangeAttendance} onClickCapture={handleReload} a-key={"false"} a-data={`${events.eventId}`}>Secret Cancel</button> 
+        <button className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1 shadow-2xl shadow-cyan-500/50" onClick={handleChangeAttendance} onClickCapture={handleReload} a-key={"tell"} a-data={`${events.eventId}`}>Tell All Cancel</button>
+        </div>
       } 
         </div></div>)}
        </div>): <div>Loading</div>}

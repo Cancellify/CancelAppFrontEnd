@@ -1,6 +1,5 @@
 "use client"
 import axios from "axios";
-import { error } from "console";
 import Link from "next/link";
 import React, {useState, useEffect, use, useContext} from "react"
 
