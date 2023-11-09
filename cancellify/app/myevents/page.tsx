@@ -10,7 +10,7 @@ export default function MyEvents() {
   const [userIdForFetch, setUserIdForFetch] = useState<any>(null);
   const [allEvents, setAllEvents] = useState<any>(null);
   const [sortEvents, setSortedEvents] = useState<any>(null);
-  const [pageCount, setPageCount] = useState<boolean>(false);
+ 
  
 
  
@@ -27,11 +27,7 @@ useEffect(() => {
   }
 }, [userIdForFetch])
 
-useEffect(()=>{
-if(pageCount){
-  window.location.reload()
-}
-},[pageCount])
+
 
   useEffect(()=>{
     if(allEvents){
@@ -61,7 +57,6 @@ if(pageCount){
     const url = "https://cancellify-2681bafbf4fb.herokuapp.com/events/cancel";
     const date = await axios.patch(url, {attendance: false, eventId: eventId, userId: parseInt(userIdForFetch), openCancel: null}).catch(error => {
       window.alert(error.response.data);
-      setPageCount(true)
     })
     handleGetEvents();
   }
@@ -72,14 +67,17 @@ if(pageCount){
     const url = "https://cancellify-2681bafbf4fb.herokuapp.com/events/cancel";
     const date = await axios.patch(url, {attendance: false, eventId: eventId, userId: parseInt(userIdForFetch), openCancel: true}).catch(error => {
       window.alert(error.response.data);
-      setPageCount(true)
+
     })
     handleGetEvents();
   }
  }
 
  function handleReload(){
-  window.location.reload();
+  setTimeout(() => {
+    window.location.reload();
+  }, 1000);
+  
  }
 
   async function handleGetEvents(){
