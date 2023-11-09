@@ -109,7 +109,7 @@ if(pageCount){
         </div>
       } 
         </div></div>)}
-       </div>): <div>Loading</div>}
+       </div>): <div><img src="https://i.ibb.co/VVqfd7B/PNGfor-Gif-Cancellify.png" alt="Loading" /></div>}
        
        <div className="flex justify-center align-items"> 
       <Link className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1 mr-1.5 shadow-2xl shadow-cyan-500/50" href="/home"><button>Back to Home?</button></Link>
