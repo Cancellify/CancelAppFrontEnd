@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react"
 import axios from "axios";
 import { useRouter } from 'next/navigation';
+import Link from "next/link";
 
 export default function DeleteAccount() {
   const [username, setUsername] = useState<null | string>(null);
@@ -54,8 +55,8 @@ const url = "https://cancellify-2681bafbf4fb.herokuapp.com/accounts/delete"
         <div className="flex items-center justify-center p-2 bg-violet-800  text-amber-300 body-font font-poppins ">Password</div>
         <input id="password" className="bg-emerald-800 rounded p-2 w-64 mb-3" type="password" ></input>
       
-        <button className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1 mr-1.5 shadow-2xl shadow-cyan-500/50" onClick={handleDelete}>Delete Account</button>
-        
+        <button className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-1 mr-1.5 mb-1.5 shadow-2xl shadow-cyan-500/50" onClick={handleDelete}>Delete Account</button>
+        <Link className="flex justify-center bg-emerald-800 rounded hover:bg-fuchsia-700 shadow-md w-fit p-2 text-xl shadow-2xl shadow-cyan-500/50" href="/myevents"><button>Got to my events</button></Link>
       </main>
     )
   }
